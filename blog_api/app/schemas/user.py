@@ -8,8 +8,7 @@ class Direccion(BaseModel):
 
 
 class Usuario(BaseModel):
-    id: int = Field()
-    nombre : str = Field()
+    nombre : str
     email: EmailStr
     direccion : Direccion
 

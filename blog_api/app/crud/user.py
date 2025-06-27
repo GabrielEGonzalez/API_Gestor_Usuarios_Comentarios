@@ -1,14 +1,31 @@
 from app.models.user import UsuarioModel , direccionModel
 from sqlalchemy.orm import Session
 
-def obtenerUsuario(db:Session):
+def obtenerUsuario(db:Session) -> list:
     
     getusuario = db.query(UsuarioModel).all()
-    return getusuario
+    listausuarios=[]
+    
+    for usuario in getusuario:
+        
+        if usuario.direccion_id:
+            direccion = db.query(direccionModel).filter(direccionModel.id == usuario.direccion_id).first()
+            
+            model = {
+                        "usuario":{
+                                    "id":usuario.id,
+                                    "nombre":usuario.nombre,
+                                    "email":usuario.email,
+                                    "direccion":direccion
+                                    }
+                    }
+            listausuarios.append(model)
+
+    return listausuarios
 
 def crearUsuario(db,User):
     
-    direcion = direccionModel(cuidad=User.cuidad,pais=User.pais,zip=User.zip)
+    direcion = direccionModel(cuidad=User.direccion.cuidad,pais=User.direccion.pais,zip=User.direccion.zip)
     db.add(direcion)
     db.flush()
     
@@ -23,4 +40,6 @@ def crearUsuario(db,User):
 def getUserByID(db:Session,id:int):
     
     usuarioid = db.query(UsuarioModel).filter(UsuarioModel.id == id).first()
-    return usuarioid
+    direccion = db.query(direccionModel).filter(direccionModel.id == usuarioid.id).first()
+    usuario = {"nombre":usuarioid.nombre,"email":usuarioid.email,"direccion":direccion}
+    return usuario

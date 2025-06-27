@@ -8,7 +8,8 @@ comentario = APIRouter(prefix="/comentarios")
 
 @comentario.get('')
 async def getcomment(db:Session=Depends(database.get_db)):
-    return
+    
+    return comentario
 
 @comentario.get('/por_post/{post}')
 async def getPostID(post:int=Path(gt=0),db:Session=Depends(database.get_db)):

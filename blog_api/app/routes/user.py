@@ -16,9 +16,10 @@ async def getUser(db : Session = Depends(get_db)):
 @userRouter.get("/{id}")
 async def getUserById(id:int,db : Session = Depends(get_db)):
     user = getUserByID(db,id)
-    if(user):
+    if not user:
         raise HTTPException(status_code=200)
-        return user
+    
+    return user
 
 
 @userRouter.post("")
