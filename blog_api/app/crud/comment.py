@@ -14,7 +14,7 @@ def getCommentPOST(db:Session,post:int):
     listComment = db.query(Comment).filter(Comment.post_id == post).all()
     return listComment
 
-def createComment(db:Session,comentario:Comentario):
+def create_Comment(db:Session,comentario:Comentario):
     
     try:
         createComment = Comment(

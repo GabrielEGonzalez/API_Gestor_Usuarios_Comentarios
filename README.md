@@ -1,7 +1,3 @@
- ¡Genial! Ya que has repasado bien todo lo visto en el tutorial hasta ahora (parámetros de path, query, body, modelos anidados, tipos extra, ejemplos, cookies...), te propongo un proyecto completo que ponga en práctica **todo eso**:
-
----
-
 ## 🚀 Proyecto Práctico: **Gestor de Usuarios y Comentarios de un Blog**
 
 ### 🎯 Objetivo:
@@ -17,20 +13,20 @@ Construir una API REST donde se puedan gestionar:
 
 #### 📌 Usuario
 
-* `id`: int (autogenerado)
-* `nombre`: str (min\_length=3)
-* `email`: EmailStr (único)
+* `id`: int
+* `nombre`: str
+* `email`: EmailStr
 * `direccion`: modelo anidado con ciudad, país, y zip
-* `preferencias`: cookies opcionales (por ejemplo, si quiere ver notificaciones)
+* `preferencias`: cookies opcionales
 
 #### 📌 Comentario
 
 * `id`: int
 * `usuario_id`: int
 * `post_id`: int
-* `contenido`: str (min\_length=10, max\_length=500)
+* `contenido`: str
 * `fecha`: datetime (auto-generado)
-* `estado`: "visible", "oculto", "eliminado" (usa Enum)
+* `estado`: "visible", "oculto", "eliminado"
 
 ---
 
@@ -54,27 +50,8 @@ Construir una API REST donde se puedan gestionar:
 | PUT    | `/comentarios/{id}`            | Actualizar el contenido o estado |
 | DELETE | `/comentarios/{id}`            | Eliminar comentario              |
 
----
 
-### 🧠 Lo que vas a practicar:
-
-* `Path`, `Query`, `Body`, `Field`, `Cookie`
-* Modelos anidados y tipos avanzados como `EmailStr`, `Enum`, `datetime`
-* Validaciones con `min_length`, `max_length`, `gt`, `le`, etc.
-* Respuestas con mensajes personalizados
-* Lectura y escritura de cookies
-
----
-
-### 📦 ¿Base de datos?
-
-Por ahora puedes **simular todo con listas** (`usuarios = []`, `comentarios = []`).
-Después podrías conectar esto a SQLite o usar un ORM como SQLModel o SQLAlchemy.
-
----
-¡Perfecto! Si vas a usar **SQLAlchemy** en este proyecto, lo ideal es que sigas una estructura **modular** y **escalable**, parecida a como se organizan los proyectos reales.
-
-Aquí te dejo un **árbol de carpetas recomendado** para tu **API de usuarios y comentarios** usando FastAPI + SQLAlchemy (sin usar ORM como SQLModel por ahora):
+**árbol de carpetas recomendado** para tu **API de usuarios y comentarios** usando FastAPI + SQLAlchemy
 
 ---
 
@@ -140,12 +117,3 @@ Inicializa SQLAlchemy (`engine`, `SessionLocal`, `Base`)
 Puedes definir aquí la `DATABASE_URL` y otras configuraciones como CORS, etc.
 
 ---
-
-### 🧪 Bonus: para testeo más adelante
-
-Puedes agregar otra carpeta `tests/` con `pytest` cuando quieras hacer pruebas automáticas.
-
----
-
-¿Quieres que empecemos creando el archivo `database.py` con la conexión y base declarativa? ¿O prefieres primero definir los modelos (`User`, `Comment`) en SQLAlchemy?
-
