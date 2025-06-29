@@ -1,5 +1,3 @@
-# blog_api/app/models/user.py (assuming this is your user model file)
-
 from app.database import Base
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship

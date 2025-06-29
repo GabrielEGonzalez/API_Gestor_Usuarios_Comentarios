@@ -3,12 +3,7 @@ from enum import Enum as PyEnum
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Enum as SQLEnum
 from sqlalchemy.orm import relationship
 from app.database import Base
-
-
-class CommentStatus(PyEnum):
-    VISIBLE = "visible"
-    HIDDEN = "oculto"
-    DELETED = "eliminado"
+from app.schemas.comment import CommentStatus
 
 class Comment(Base):
     __tablename__ = "comments"

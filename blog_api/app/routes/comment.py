@@ -1,33 +1,63 @@
-from .. import models,schemas,crud,database
-from fastapi import APIRouter , Depends,Path
-from app.crud.comment import obtenerComment,getCommentPOST,create_Comment,updateComment,deleteComment
-from app.schemas.comment import Comentario
-from typing import Annotated
+from fastapi import APIRouter , Depends, Path, HTTPException, status
 from sqlalchemy.orm import Session
+from typing import List
+from app.crud import comment as crud_comment
+from app.schemas.comment import ComentarioBase, ComentarioResponse
+from app.database import get_db
 
-comentario = APIRouter(prefix="/comentarios")
+router = APIRouter(prefix="/comentarios", tags=["Comentarios"]) 
 
-@comentario.get('',response_model=list[schemas.ComentarioResponse])
-async def getcomment(db:Session=Depends(database.get_db)):
-    coment = obtenerComment(db)
-    return coment
+@router.get('', response_model=List[ComentarioResponse])
+async def get_all_comments(db:Session=Depends(get_db)):
+    """
+    Obtiene una lista de todos los comentarios.
+    """
+    comentarios = crud_comment.obtenerComment(db)
+    return comentarios
 
-@comentario.get('/por_post/{post}')
-async def getPostID(post:int=Path(gt=0),db:Session=Depends(database.get_db)):
-    getpost = getCommentPOST(db,post)
-    return getpost
+@router.get('/por_post/{post_id}', response_model=List[ComentarioResponse])
+async def get_comments_by_post_id(post_id: int = Path(gt=0), db:Session=Depends(get_db)):
+    """
+    Obtiene una lista de comentarios filtrados por el ID del post.
+    """
+    comments = crud_comment.getCommentPOST(db, post_id)
+    if not comments:
+        return []
+    return comments
 
-@comentario.post('',response_model=schemas.ComentarioResponse)
-async def createComment(comen:Comentario,db:Session=Depends(database.get_db)):
-    
-    comment = create_Comment(db,comen)
-    return comment
+@router.post('', response_model=ComentarioResponse, status_code=status.HTTP_201_CREATED)
+async def create_new_comment(comentario_data: ComentarioBase, db:Session=Depends(get_db)):
+    """
+    Crea un nuevo comentario en la base de datos.
+    """
+    try:
+        new_comment = crud_comment.createComment(db, comentario_data)
+        return new_comment
+    except Exception as e:
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Error creating comment: {e}")
 
-@comentario.put('/{id}')
-async def updateComment():
-    return
+@router.put('/{comment_id}', response_model=ComentarioResponse)
+async def update_existing_comment(comment_id: int, comentario_data: ComentarioBase, db:Session=Depends(get_db)):
+    """
+    Actualiza un comentario existente por su ID.
+    """
+    try:
+        updated_comment = crud_comment.updateComment(db, comment_id, comentario_data)
+        return updated_comment
+    except HTTPException as e:
+        raise e
+    except Exception as e:
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Error updating comment: {e}")
 
-@comentario.delete('/{id}')
-async def deleteComment(db:Session=Depends(database.get_db),id:int=Path(...,gt=0)):
-    mensaje = deleteComment(db,id)
-    return mensaje
+@router.delete('/{comment_id}', status_code=status.HTTP_200_OK)
+async def delete_comment(db:Session=Depends(get_db), comment_id:int=Path(...,gt=0)):
+    """
+    Elimina un comentario por su ID.
+    """
+    try:
+        mensaje = crud_comment.deleteComment(db, comment_id)
+        return mensaje
+    except HTTPException as e:
+        raise e
+    except Exception as e:
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Error deleting comment: {e}")
