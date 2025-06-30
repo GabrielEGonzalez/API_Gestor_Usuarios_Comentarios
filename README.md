@@ -1,119 +1,142 @@
-## 🚀 Proyecto Práctico: **Gestor de Usuarios y Comentarios de un Blog**
+# 🚀 API Gestor de Usuarios y Comentarios de Blog
 
-### 🎯 Objetivo:
-
-Construir una API REST donde se puedan gestionar:
-
-1. Usuarios registrados del blog
-2. Comentarios que esos usuarios dejan en los artículos
+Una API REST construida con **FastAPI** para gestionar usuarios y comentarios de un blog. Permite crear usuarios, asociar comentarios a publicaciones y manejar el estado de los mismos.
 
 ---
 
-### 🧱 Modelos:
+## 🎯 Objetivo
 
-#### 📌 Usuario
+Crear una API funcional para:
 
-* `id`: int
-* `nombre`: str
-* `email`: EmailStr
-* `direccion`: modelo anidado con ciudad, país, y zip
-* `preferencias`: cookies opcionales
-
-#### 📌 Comentario
-
-* `id`: int
-* `usuario_id`: int
-* `post_id`: int
-* `contenido`: str
-* `fecha`: datetime (auto-generado)
-* `estado`: "visible", "oculto", "eliminado"
+- 📌 Registrar y consultar **usuarios** del blog
+- 💬 Gestionar los **comentarios** que esos usuarios dejan en artículos
 
 ---
 
-### 📌 Endpoints:
+## 🧱 Modelos
 
-#### Usuarios
+### 👤 Usuario
+
+| Campo       | Tipo     | Descripción                          |
+|-------------|----------|--------------------------------------|
+| `id`        | int      | Identificador único del usuario      |
+| `nombre`    | str      | Nombre del usuario                   |
+| `email`     | EmailStr | Correo electrónico                   |
+| `direccion` | objeto   | Ciudad, país y código postal         |
+| `preferencias` | dict (opcional) | Preferencias vía cookies    |
+
+### 💬 Comentario
+
+| Campo       | Tipo     | Descripción                          |
+|-------------|----------|--------------------------------------|
+| `id`        | int      | Identificador del comentario         |
+| `usuario_id`| int      | ID del usuario que comenta           |
+| `post_id`   | int      | ID del post al que se comenta        |
+| `contenido` | str      | Texto del comentario                 |
+| `fecha`     | datetime | Fecha de creación (auto-generado)    |
+| `estado`    | str      | `"visible"`, `"oculto"`, `"eliminado"` |
+
+---
+
+## 🔗 Endpoints Principales
+
+### Usuarios
 
 | Método | Ruta             | Descripción                |
-| ------ | ---------------- | -------------------------- |
+|--------|------------------|----------------------------|
 | GET    | `/usuarios`      | Obtener todos los usuarios |
-| GET    | `/usuarios/{id}` | Obtener usuario por ID     |
-| POST   | `/usuarios`      | Crear usuario              |
+| GET    | `/usuarios/{id}` | Obtener un usuario por ID  |
+| POST   | `/usuarios`      | Crear un nuevo usuario     |
 
-#### Comentarios
+### Comentarios
 
-| Método | Ruta                           | Descripción                      |
-| ------ | ------------------------------ | -------------------------------- |
-| GET    | `/comentarios`                 | Listar todos los comentarios     |
-| GET    | `/comentarios/por-post/{post}` | Listar comentarios por post\_id  |
-| POST   | `/comentarios`                 | Crear un nuevo comentario        |
-| PUT    | `/comentarios/{id}`            | Actualizar el contenido o estado |
-| DELETE | `/comentarios/{id}`            | Eliminar comentario              |
-
-
-**árbol de carpetas recomendado** para tu **API de usuarios y comentarios** usando FastAPI + SQLAlchemy
+| Método | Ruta                            | Descripción                         |
+|--------|----------------------------------|-------------------------------------|
+| GET    | `/comentarios`                  | Listar todos los comentarios        |
+| GET    | `/comentarios/por-post/{post}`  | Listar comentarios por `post_id`    |
+| POST   | `/comentarios`                  | Crear un nuevo comentario           |
+| PUT    | `/comentarios/{id}`             | Actualizar contenido o estado       |
+| DELETE | `/comentarios/{id}`             | Eliminar comentario (soft delete)   |
 
 ---
 
-## 🌲 Estructura de Carpetas
+## 🗂️ Estructura del Proyecto
 
-```
+```bash
 blog_api/
 ├── app/
-│   ├── __init__.py
-│   ├── main.py                  # Punto de entrada (crea el FastAPI app)
-│   ├── models/                  # Modelos de SQLAlchemy
-│   │   ├── __init__.py
+│   ├── main.py                  # Punto de entrada FastAPI
+│   ├── models/                  # Modelos SQLAlchemy
 │   │   ├── user.py
 │   │   └── comment.py
-│   ├── schemas/                 # Modelos Pydantic (entrada/salida)
-│   │   ├── __init__.py
+│   ├── schemas/                 # Modelos Pydantic (I/O)
 │   │   ├── user.py
 │   │   └── comment.py
-│   ├── crud/                    # Lógica de base de datos (funciones)
-│   │   ├── __init__.py
+│   ├── crud/                    # Funciones CRUD
 │   │   ├── user.py
 │   │   └── comment.py
-│   ├── routes/                  # Rutas o endpoints (routers)
-│   │   ├── __init__.py
+│   ├── routes/                  # Rutas (routers)
 │   │   ├── user.py
 │   │   └── comment.py
-│   ├── database.py              # Conexión a la base de datos
-│   └── config.py                # Configuración general (URI, settings, etc)
+│   ├── database.py              # Conexión a DB
+│   └── config.py                # Config global (URI, CORS, etc)
 ├── requirements.txt             # Dependencias
-└── README.md                    # Explicación del proyecto
-```
+└── README.md                    # Documentación
+⚙️ Tecnologías Usadas
+⚡ FastAPI
 
----
+🐘 SQLAlchemy
 
-## 🔧 Archivos clave
+📄 Pydantic
 
-### `main.py`
+🐍 Python 3.11+
 
-Registra todos los routers y ejecuta la app.
+🛢️ SQLite / MySQL
 
-### `models/*.py`
+🔐 JWT para autenticación (por implementar o integrar)
 
-Contiene tus clases de SQLAlchemy (`User`, `Comment`).
+🧪 Swagger UI / ReDoc (auto-generado)
 
-### `schemas/*.py`
+🧪 Pruebas
+Puedes probar la API con:
 
-Contiene tus clases de entrada/salida (`UserCreate`, `UserResponse`, `CommentCreate`, etc.)
+⚙️ Swagger UI en http://localhost:8000/docs
 
-### `crud/*.py`
+📬 Postman (importar endpoints si generas colección)
 
-Funciones como `create_user`, `get_user_by_id`, `add_comment`, etc.
+🚀 Instrucciones para Ejecutar Localmente
+Clona el proyecto:
 
-### `routes/*.py`
+bash
+Copiar
+Editar
+git clone https://github.com/GabrielEGonzalez/API_Gestor_Usuarios_Comentarios.git
+cd API_Gestor_Usuarios_Comentarios
+Instala dependencias:
 
-Define las rutas (`/usuarios`, `/comentarios`, etc.)
+bash
+Copiar
+Editar
+pip install -r requirements.txt
+Ejecuta el servidor:
 
-### `database.py`
+bash
+Copiar
+Editar
+uvicorn app.main:app --reload
+Abre en navegador:
 
-Inicializa SQLAlchemy (`engine`, `SessionLocal`, `Base`)
+Swagger: http://127.0.0.1:8000/docs
 
-### `config.py`
+ReDoc: http://127.0.0.1:8000/redoc
 
-Puedes definir aquí la `DATABASE_URL` y otras configuraciones como CORS, etc.
+¿Quieres guía para desplegarla? [Contáctame o revisa los issues del proyecto.]
 
----
+📌 Estado del Proyecto
+🟢 Fase completada: Implementación funcional
+🔵 En progreso: Documentación avanzada, pruebas y despliegue
+
+📬 Autor
+Gabriel E. González
+GitHub: @GabrielEGonzalez
+
