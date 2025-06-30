@@ -82,6 +82,8 @@ blog_api/
 │   └── config.py                # Config global (URI, CORS, etc)
 ├── requirements.txt             # Dependencias
 └── README.md                    # Documentación
+
+---
 ⚙️ Tecnologías Usadas
 ⚡ FastAPI
 
