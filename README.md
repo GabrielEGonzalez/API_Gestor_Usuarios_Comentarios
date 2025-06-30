@@ -1,3 +1,6 @@
+---
+
+````markdown
 # 🚀 API Gestor de Usuarios y Comentarios de Blog
 
 Una API REST construida con **FastAPI** para gestionar usuarios y comentarios de un blog. Permite crear usuarios, asociar comentarios a publicaciones y manejar el estado de los mismos.
@@ -17,24 +20,24 @@ Crear una API funcional para:
 
 ### 👤 Usuario
 
-| Campo       | Tipo     | Descripción                          |
-|-------------|----------|--------------------------------------|
-| `id`        | int      | Identificador único del usuario      |
-| `nombre`    | str      | Nombre del usuario                   |
-| `email`     | EmailStr | Correo electrónico                   |
-| `direccion` | objeto   | Ciudad, país y código postal         |
-| `preferencias` | dict (opcional) | Preferencias vía cookies    |
+| Campo         | Tipo     | Descripción                          |
+|---------------|----------|--------------------------------------|
+| `id`          | int      | Identificador único del usuario      |
+| `nombre`      | str      | Nombre del usuario                   |
+| `email`       | EmailStr | Correo electrónico                   |
+| `direccion`   | objeto   | Ciudad, país y código postal         |
+| `preferencias`| dict (opcional) | Preferencias vía cookies      |
 
 ### 💬 Comentario
 
-| Campo       | Tipo     | Descripción                          |
-|-------------|----------|--------------------------------------|
-| `id`        | int      | Identificador del comentario         |
-| `usuario_id`| int      | ID del usuario que comenta           |
-| `post_id`   | int      | ID del post al que se comenta        |
-| `contenido` | str      | Texto del comentario                 |
-| `fecha`     | datetime | Fecha de creación (auto-generado)    |
-| `estado`    | str      | `"visible"`, `"oculto"`, `"eliminado"` |
+| Campo        | Tipo     | Descripción                          |
+|--------------|----------|--------------------------------------|
+| `id`         | int      | Identificador del comentario         |
+| `usuario_id` | int      | ID del usuario que comenta           |
+| `post_id`    | int      | ID del post al que se comenta        |
+| `contenido`  | str      | Texto del comentario                 |
+| `fecha`      | datetime | Fecha de creación (auto-generado)    |
+| `estado`     | str      | `"visible"`, `"oculto"`, `"eliminado"` |
 
 ---
 
@@ -60,7 +63,7 @@ Crear una API funcional para:
 
 ---
 
-## 🗂️ Estructura del Proyecto
+## 🌲 Estructura del Proyecto
 
 ```bash
 blog_api/
@@ -82,63 +85,86 @@ blog_api/
 │   └── config.py                # Config global (URI, CORS, etc)
 ├── requirements.txt             # Dependencias
 └── README.md                    # Documentación
+````
 
 ---
-⚙️ Tecnologías Usadas
-⚡ FastAPI
 
-🐘 SQLAlchemy
+## ⚙️ Tecnologías Usadas
 
-📄 Pydantic
+* ⚡ **FastAPI** – Framework para APIs modernas
+* 🐘 **SQLAlchemy** – ORM para base de datos
+* 📄 **Pydantic** – Validación y serialización
+* 🐍 **Python 3.11+**
+* 🛢️ **SQLite / MySQL**
+* 🧪 **Swagger UI / ReDoc** – Documentación automática
 
-🐍 Python 3.11+
+---
 
-🛢️ SQLite / MySQL
+## 🧪 Pruebas
 
-🔐 JWT para autenticación (por implementar o integrar)
+Puedes probar la API desde:
 
-🧪 Swagger UI / ReDoc (auto-generado)
+* Swagger: `http://127.0.0.1:8000/docs`
+* ReDoc: `http://127.0.0.1:8000/redoc`
+* Postman: (próximamente incluir colección .json en el repositorio)
 
-🧪 Pruebas
-Puedes probar la API con:
+---
 
-⚙️ Swagger UI en http://localhost:8000/docs
+## 🛠️ Instalación y Ejecución Local
 
-📬 Postman (importar endpoints si generas colección)
+1. Clona el proyecto:
 
-🚀 Instrucciones para Ejecutar Localmente
-Clona el proyecto:
+   ```bash
+   git clone https://github.com/GabrielEGonzalez/API_Gestor_Usuarios_Comentarios.git
+   cd API_Gestor_Usuarios_Comentarios
+   ```
 
-bash
-Copiar
-Editar
-git clone https://github.com/GabrielEGonzalez/API_Gestor_Usuarios_Comentarios.git
-cd API_Gestor_Usuarios_Comentarios
-Instala dependencias:
+2. Crea un entorno virtual (opcional):
 
-bash
-Copiar
-Editar
-pip install -r requirements.txt
-Ejecuta el servidor:
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # En Windows: venv\Scripts\activate
+   ```
 
-bash
-Copiar
-Editar
-uvicorn app.main:app --reload
-Abre en navegador:
+3. Instala dependencias:
 
-Swagger: http://127.0.0.1:8000/docs
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-ReDoc: http://127.0.0.1:8000/redoc
+4. Ejecuta el servidor:
 
-¿Quieres guía para desplegarla? [Contáctame o revisa los issues del proyecto.]
+   ```bash
+   uvicorn app.main:app --reload
+   ```
 
-📌 Estado del Proyecto
-🟢 Fase completada: Implementación funcional
-🔵 En progreso: Documentación avanzada, pruebas y despliegue
+5. Abre en navegador:
 
-📬 Autor
-Gabriel E. González
-GitHub: @GabrielEGonzalez
+   * Swagger: `http://127.0.0.1:8000/docs`
+   * ReDoc: `http://127.0.0.1:8000/redoc`
 
+---
+## 🚀 Despliegue (próximo paso)
+---
+
+## 📬 Autor
+
+**Gabriel E. González**
+📂 GitHub: [@GabrielEGonzalez](https://github.com/GabrielEGonzalez)
+📫 Contacto: [gabriel.ejemplo@email.com](mailto:enriquegonzalez123467@gmail.com)
+
+---
+
+## 📝 Estado del Proyecto
+
+> 🟢 Fase actual: API funcional completa
+> 🔵 Próximos pasos: pruebas, documentación externa y despliegue
+
+---
+
+## ❤️ Contribuciones
+
+¿Quieres contribuir o dejar sugerencias?
+¡Crea un `issue` o `pull request` en este repositorio!
+
+---
