@@ -1,6 +1,4 @@
 ---
-
-````markdown
 # 🚀 API Gestor de Usuarios y Comentarios de Blog
 
 Una API REST construida con **FastAPI** para gestionar usuarios y comentarios de un blog. Permite crear usuarios, asociar comentarios a publicaciones y manejar el estado de los mismos.
